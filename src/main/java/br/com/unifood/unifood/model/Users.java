@@ -10,6 +10,7 @@ public class Users {
     private Long id;
     private String password;
     private String email;
+    private String name;
 
     public Long getId() {
         return id;
@@ -21,5 +22,9 @@ public class Users {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getName() {
+        return name;
     }
 }
