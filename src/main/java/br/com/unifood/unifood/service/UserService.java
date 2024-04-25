@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public Users saveOrUpdateUser(Users users) {
-        return userRepository.save(users);
+        return users;
     }
 
     public void deleteUserById(Long id) {
