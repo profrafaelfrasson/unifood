@@ -3,6 +3,7 @@ package br.com.unifood.unifood.service;
 import br.com.unifood.unifood.model.Users;
 import br.com.unifood.unifood.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public Optional<Users> authenticate(Users login) {
-        return userRepository.findByEmailAndPassword(login.getEmail(), login.getPassword());
-    }
+    //public Optional<Users> authenticate(Users login) throws UsernameNotFoundException {
+    //    return userRepository.findByEmailAndPassword(login.getEmail(), login.getPassword());
+    //}
 }
