@@ -22,11 +22,14 @@ public class UserService {
     }
 
     public Users saveOrUpdateUser(Users users) {
-        return users;
-        //batata
+        return userRepository.save(users);
     }
 
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public Optional<Users> authenticate(Users login) {
+        return userRepository.findByEmailAndPassword(login.getEmail(), login.getPassword());
     }
 }

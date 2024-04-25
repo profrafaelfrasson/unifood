@@ -4,6 +4,8 @@ package br.com.unifood.unifood.controller;
 import br.com.unifood.unifood.model.Users;
 import br.com.unifood.unifood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,4 +39,18 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
     }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody Users login) {
+        Optional<Users> user = userService.authenticate(login);
+        if (user.isPresent()) {
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
+    }
+
+
 }
+
