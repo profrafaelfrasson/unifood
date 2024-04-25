@@ -34,23 +34,19 @@ public class UserController {
         return userService.saveOrUpdateUser(users);
     }
 
-
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
     }
 
-
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody Users login) {
         Optional<Users> user = userService.authenticate(login);
         if (user.isPresent()) {
-            return ResponseEntity.ok("Login successful");
+            return ResponseEntity.ok("Logado com sucesso" + user);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email invalido");
         }
     }
-
-
 }
 
