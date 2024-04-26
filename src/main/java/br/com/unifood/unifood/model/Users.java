@@ -1,7 +1,10 @@
 package br.com.unifood.unifood.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,6 +12,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Users implements UserDetails {
 
@@ -19,7 +25,13 @@ public class Users implements UserDetails {
     private String email;
     private String name;
 
-    @Override
+    public Users(String email, String password, String name) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+    }
+
+    @Override //Roles retornando lista vazia, pois ainda n foi implementado
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }

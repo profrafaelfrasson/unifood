@@ -30,7 +30,4 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    //public Optional<Users> authenticate(Users login) throws UsernameNotFoundException {
-    //    return userRepository.findByEmailAndPassword(login.getEmail(), login.getPassword());
-    //}
 }
