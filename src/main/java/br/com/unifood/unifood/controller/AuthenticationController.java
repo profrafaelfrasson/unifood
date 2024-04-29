@@ -6,6 +6,7 @@ import br.com.unifood.unifood.model.dto.LoginResponseDTO;
 import br.com.unifood.unifood.model.dto.RegisterDTO;
 import br.com.unifood.unifood.repository.UserRepository;
 import br.com.unifood.unifood.security.TokenService;
+import br.com.unifood.unifood.service.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,9 +41,9 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Validated RegisterDTO data) {
         if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
-
+        AuthorizationService auth = new AuthorizationService();
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        Users newUser = new Users(data.email(), encryptedPassword, data.name());
+        Users newUser = new Users(data.email(), encryptedPassword, data.name(), auth.createdDateLocalNow());
 
         this.repository.save(newUser);
 

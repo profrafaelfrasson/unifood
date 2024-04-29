@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,11 +27,13 @@ public class Users implements UserDetails {
     private String password;
     private String email;
     private String name;
+    private LocalDateTime created_at;
 
-    public Users(String email, String password, String name) {
+    public Users(String email, String password, String name, LocalDateTime created_at) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.created_at = created_at;
     }
 
     @Override //Roles retornando lista vazia, pois ainda n foi implementado
