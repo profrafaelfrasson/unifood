@@ -14,7 +14,7 @@
 	<name>unifood</name>
 	<description>Projeto de ERP para cantina da Univitne</description>
 	<properties>
-		<java.version>22</java.version>
+		<java.version>21</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
