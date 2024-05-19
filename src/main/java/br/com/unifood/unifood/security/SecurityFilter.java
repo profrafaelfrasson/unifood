@@ -30,10 +30,10 @@ public class SecurityFilter extends OncePerRequestFilter {
         if(token != null){
             String login = tokenService.validateToken(token.trim()); //faz a validação do token (TRIM pq ta de alguma forma vindo um espaço na string do token
             UserDetails user = userRepository.findByEmail(login);
-
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
+            if (user != null) {
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         filterChain.doFilter(request, response);
     }
