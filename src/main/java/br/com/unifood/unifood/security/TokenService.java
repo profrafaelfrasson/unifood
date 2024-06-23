@@ -1,11 +1,10 @@
 package br.com.unifood.unifood.security;
 
-import br.com.unifood.unifood.model.Users;
+import br.com.unifood.unifood.model.users.Users;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package br.com.unifood.unifood.controller;
 
-import br.com.unifood.unifood.model.Users;
+import br.com.unifood.unifood.model.users.Users;
 import br.com.unifood.unifood.model.dto.AuthenticationDTO;
 import br.com.unifood.unifood.model.dto.LoginResponseDTO;
 import br.com.unifood.unifood.model.dto.RegisterDTO;

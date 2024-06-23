@@ -1,4 +1,4 @@
-package br.com.unifood.unifood.model;
+package br.com.unifood.unifood.model.users;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,9 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Data
