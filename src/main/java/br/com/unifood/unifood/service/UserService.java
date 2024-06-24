@@ -21,10 +21,6 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Users saveOrUpdateUser(Users users) {
-        return userRepository.save(users);
-    }
-
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }

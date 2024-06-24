@@ -1,19 +1,19 @@
 package br.com.unifood.unifood.model.category;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import br.com.unifood.unifood.model.products.Products;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "categories")
 public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,9 @@ public class Categories {
     private String description;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+
+    @OneToMany(mappedBy = "categories")
+    private Set<Products> products;
 
     public Categories(String name, String description, LocalDateTime created_at, LocalDateTime updated_at) {
         this.name = name;

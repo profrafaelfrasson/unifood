@@ -34,7 +34,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .anyRequest().authenticated() // apenas essas url são permitidas, fora isso todas tem q ser autenticadas
+                        .anyRequest().permitAll() // apenas essas url são permitidas, fora isso todas tem q ser autenticadas
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
