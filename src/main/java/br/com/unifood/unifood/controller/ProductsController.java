@@ -34,7 +34,7 @@ public class ProductsController {
 
     GlobalError GlobalError = new GlobalError();
 
-    @PostMapping("/")
+    @PostMapping("/products")
     public ResponseEntity register(@RequestBody @Validated ProductsDTO data) {
         try {
             if (this.productsRepository.findByName(data.name()) != null) return ResponseEntity.badRequest().build();
