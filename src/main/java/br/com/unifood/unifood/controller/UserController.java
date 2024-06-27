@@ -35,11 +35,8 @@ public class UserController {
             return new ResponseEntity<>("Usuário não encontrado!", HttpStatus.NOT_FOUND);
         } else {
             userService.deleteUserById(id);
-            String names = user.stream() // Para pegar nome do usuário
-                    .map(Users::getName)
-                    .collect(Collectors.joining());
 
-            return new ResponseEntity<>("Usuario: " + names + " deletado com sucesso!",HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 

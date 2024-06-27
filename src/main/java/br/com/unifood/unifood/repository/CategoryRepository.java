@@ -7,5 +7,4 @@ public interface CategoryRepository extends JpaRepository<Categories, Long> {
 
     Categories findByName(String name);
 
-
 }
