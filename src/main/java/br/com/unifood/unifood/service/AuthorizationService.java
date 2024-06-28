@@ -1,12 +1,8 @@
 package br.com.unifood.unifood.service;
 
-import br.com.unifood.unifood.model.dto.AuthenticationDTO;
-import br.com.unifood.unifood.model.users.Users;
 import br.com.unifood.unifood.repository.UserRepository;
 import br.com.unifood.unifood.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,8 +18,7 @@ public class UserController {
 
     @GetMapping("/all")
     public List<Users> getAllUsers() {
-        List<Users> users = userService.getAllUsers();
-        return users;
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")

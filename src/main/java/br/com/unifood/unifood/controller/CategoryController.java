@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -27,7 +26,7 @@ public class CategoryController {
     GlobalError globalError = new GlobalError();
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Validated CategoryDTO data) {
+    public ResponseEntity<Object> register(@RequestBody @Validated CategoryDTO data) {
      try {
          Categories newCategories = categoryService.registerProduct(data.name(), data.description(), data.created_at());
          if (newCategories != null) {
@@ -43,12 +42,11 @@ public class CategoryController {
 
     @GetMapping("/all")
     public List<Categories> getAllCategories() {
-        List<Categories> categories = categoryService.getAllCategories();
-        return categories;
+        return categoryService.getAllCategories();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getUserById(@PathVariable Long id) {
+    public ResponseEntity<Object> getUserById(@PathVariable Long id) {
         try {
             Categories listCategories = categoryService.findById(id);
             return ResponseEntity.ok(listCategories);
@@ -59,10 +57,10 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateCategory(@PathVariable Long id, @RequestBody @Validated CategoryDTO data) {
+    public ResponseEntity<Object> updateCategory(@PathVariable Long id, @RequestBody @Validated CategoryDTO data) {
         try {
-            Optional<Categories> updateCategory = categoryService.updateProduct(id, data.name(), data.description());
-            if (updateCategory.isPresent()) {
+            Categories updateCategory = categoryService.updateProduct(id, data.name(), data.description());
+            if (updateCategory != null) {
                 return ResponseEntity.status(HttpStatus.FOUND).body(updateCategory);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada!");
@@ -73,7 +71,7 @@ public class CategoryController {
         }
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
         try {
             boolean deleteCategory = categoryService.deleteCategoryById(id);
             if (deleteCategory) {

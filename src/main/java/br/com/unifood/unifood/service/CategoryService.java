@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -25,10 +24,10 @@ public class CategoryService {
         return newCategories;
     }
 
-    public Optional<Categories> updateProduct(Long id, String name, String desc) {
+    public Categories updateProduct(Long id, String name, String desc) {
         Categories existCategory = repository.findById(id).orElse(null);
         if (existCategory == null) {
-            return Optional.empty();
+            return null;
         }
         LocalDateTime originalCreatedAt = existCategory.getCreated_at();
         if (name.isEmpty()) {existCategory.setName(name);}
@@ -36,7 +35,7 @@ public class CategoryService {
         existCategory.setCreated_at(originalCreatedAt);
         existCategory.setUpdated_at(LocalDateTime.now());
         repository.save(existCategory);
-        return Optional.of(existCategory); //sla
+        return existCategory; //sla
     }
 
 
