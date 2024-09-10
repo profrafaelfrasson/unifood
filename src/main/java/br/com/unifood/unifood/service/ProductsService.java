@@ -21,43 +21,43 @@ public class ProductsService {
     @Autowired
     private CategoryService categoryService;
 
-
-    public Products registerProduct(String codeP, String name, double costValue, Long category, double purcValue, LocalDateTime h_now, String desc) {
-        Categories categories = this.categoryService.findById(category);
-        AuthorizationService auth = new AuthorizationService();
-        Products newProducts = new Products(codeP, name, costValue, categories, purcValue,h_now,null, desc);
-        this.productsRepository.save(newProducts);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newProducts).getBody();
-    }
-
-    public Products updateProduct(Long id, String name, String desc, double costValue, double purchValue, Long category) {
-        Categories categories = this.categoryService.findById(category);
-        Products existingProduct = getProductById(id).orElse(null);
-        if (existingProduct == null) {
-            return null;
-        }
-        LocalDateTime originalCreatedAt = existingProduct.getCreated_at();
-        existingProduct.setCreated_at(originalCreatedAt);
-        existingProduct.setName(name);
-        existingProduct.setDescription(desc);
-        existingProduct.setUpdated_at(LocalDateTime.now());
-        existingProduct.setPurchase_value(purchValue);
-        existingProduct.setCost_value(costValue);
-        existingProduct.setCategories(categories);
-        productsRepository.save(existingProduct);
-        return existingProduct;
-    }
-
-    public List<Products> getAllCategories() {
-        return productsRepository.findAll();
-    }
-
-    public Optional<Products> getProductById(Long id) {
-        return productsRepository.findById(id);
-    }
-
-    public void deleteProductById(Long id) {
-        productsRepository.deleteById(id);
-    }
+//
+//    public Products registerProduct(String codeP, String name, double costValue, Long category, double purcValue, LocalDateTime h_now, String desc) {
+//        Categories categories = this.categoryService.findById(category);
+//        AuthorizationService auth = new AuthorizationService();
+//        Products newProducts = new Products(codeP, name, costValue, categories, purcValue,h_now,null, desc);
+//        this.productsRepository.save(newProducts);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(newProducts).getBody();
+//    }
+//
+//    public Products updateProduct(Long id, String name, String desc, double costValue, double purchValue, Long category) {
+//        Categories categories = this.categoryService.findById(category);
+//        Products existingProduct = getProductById(id).orElse(null);
+//        if (existingProduct == null) {
+//            return null;
+//        }
+//        LocalDateTime originalCreatedAt = existingProduct.getCreated_at();
+//        existingProduct.setCreated_at(originalCreatedAt);
+//        existingProduct.setName(name);
+//        existingProduct.setDescription(desc);
+//        existingProduct.setUpdated_at(LocalDateTime.now());
+//        existingProduct.setPurchase_value(purchValue);
+//        existingProduct.setCost_value(costValue);
+//        existingProduct.setCategories(categories);
+//        productsRepository.save(existingProduct);
+//        return existingProduct;
+//    }
+//
+//    public List<Products> getAllCategories() {
+//        return productsRepository.findAll();
+//    }
+//
+//    public Optional<Products> getProductById(Long id) {
+//        return productsRepository.findById(id);
+//    }
+//
+//    public void deleteProductById(Long id) {
+//        productsRepository.deleteById(id);
+//    }
 
 }

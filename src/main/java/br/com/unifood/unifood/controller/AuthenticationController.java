@@ -28,25 +28,25 @@ public class AuthenticationController {
     private TokenService tokenService;
     @Autowired
     private UserRepository repository;
-
-    @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody @Validated AuthenticationDTO login) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(login.email(), login.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
-        var user = (Users) auth.getPrincipal();
-        var token = tokenService.generateToken((Users) auth.getPrincipal());
-
-        return ResponseEntity.ok(new LoginResponseDTO(token, user.getId()));
-    }
-    @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody @Validated RegisterDTO data) {
-        if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
-        AuthorizationService auth = new AuthorizationService();
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        Users newUser = new Users(data.email(), encryptedPassword, data.name(), auth.createdDateLocalNow());
-
-        this.repository.save(newUser);
-
-        return ResponseEntity.ok().build();
-    }
+//
+//    @PostMapping("/login")
+//    public ResponseEntity<Object> login(@RequestBody @Validated AuthenticationDTO login) {
+////        var usernamePassword = new UsernamePasswordAuthenticationToken(login.email(), login.password());
+////        var auth = this.authenticationManager.authenticate(usernamePassword);
+////        var user = (Users) auth.getPrincipal();
+////        var token = tokenService.generateToken((Users) auth.getPrincipal());
+////
+////        return ResponseEntity.ok(new LoginResponseDTO(token, user.getId()));
+//    }
+//    @PostMapping("/register")
+//    public ResponseEntity<Object> register(@RequestBody @Validated RegisterDTO data) {
+////        if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
+////        AuthorizationService auth = new AuthorizationService();
+////        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+////        Users newUser = new Users(data.email(), encryptedPassword, data.name(), auth.createdDateLocalNow());
+////
+////        this.repository.save(newUser);
+//
+//        return ResponseEntity.ok().build();
+//    }
 }

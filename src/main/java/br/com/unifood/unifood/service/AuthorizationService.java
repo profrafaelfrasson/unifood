@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Service
-public class AuthorizationService implements UserDetailsService {
+public class AuthorizationService {
 
     @Autowired
     UserRepository repository;
@@ -20,13 +20,13 @@ public class AuthorizationService implements UserDetailsService {
     @Autowired
     private TokenService tokenService;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByEmail(username);
-    }
-
-    public LocalDateTime createdDateLocalNow() {
-        ZoneId zoneEsp = ZoneId.of("America/Sao_Paulo");
-        return LocalDateTime.now(zoneEsp);
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return repository.findByEmail(username);
+//    }
+//
+//    public LocalDateTime createdDateLocalNow() {
+//        ZoneId zoneEsp = ZoneId.of("America/Sao_Paulo");
+//        return LocalDateTime.now(zoneEsp);
+//    }
 }
