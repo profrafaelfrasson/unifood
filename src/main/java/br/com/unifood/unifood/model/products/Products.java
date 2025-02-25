@@ -19,24 +19,30 @@ public class Products {
     private int id;
     private String product_code;
     private String name;
-    private double cost_value;
-    private double purchase_value;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Categories categories; //FK
+    private Categories category;
 
-    public Products(String product_code, String name, double cost_value, Categories categories, double purchase_value, LocalDateTime created_at, LocalDateTime updated_at, String description) {
-        this.product_code = product_code;
+    public Products(String productCode, String name, Categories category, String description, LocalDateTime updated_at) {
+        this.product_code = productCode;
         this.name = name;
-        this.cost_value = cost_value;
-        this.purchase_value = purchase_value;
-        this.categories = categories;
+        this.category = category;
         this.description = description;
-        this.created_at = created_at;
         this.updated_at = updated_at;
     }
+
+    public Products(String productCode, String name, Categories category, String description) {
+        this.product_code = productCode;
+        this.name = name;
+        this.category = category;
+        this.description = description;
+    }
+
+
 }

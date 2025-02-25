@@ -23,9 +23,6 @@ public class Categories {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    @OneToMany(mappedBy = "categories")
-    private Set<Products> products;
-
     public Categories(String name, String description, LocalDateTime created_at, LocalDateTime updated_at) {
         this.name = name;
         this.description = description;

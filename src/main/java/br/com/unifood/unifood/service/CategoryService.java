@@ -11,9 +11,6 @@ import java.util.List;
 @Service
 public class CategoryService {
     @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
     private CategoryRepository repository;
 
     public Categories registerProduct(String name, String desc, LocalDateTime H_now) {
@@ -24,32 +21,32 @@ public class CategoryService {
         return newCategories;
     }
 
-    public Categories updateProduct(Long id, String name, String desc) {
-        Categories existCategory = repository.findById(id).orElse(null);
-        if (existCategory == null) {
+    public Categories updateCategory(Long id, String name, String description) {
+        Categories category = repository.findById(id).orElse(null);
+
+        if (category == null) {
             return null;
         }
-        LocalDateTime originalCreatedAt = existCategory.getCreated_at();
-        if (name.isEmpty()) {existCategory.setName(name);}
-        if (desc.isEmpty()) {existCategory.setDescription(desc);}
-        existCategory.setCreated_at(originalCreatedAt);
-        existCategory.setUpdated_at(LocalDateTime.now());
-        repository.save(existCategory);
-        return existCategory; //sla
+
+        if (!name.isEmpty()) {category.setName(name);}
+        if (!description.isEmpty()) {category.setDescription(description);}
+
+        repository.save(category);
+        return category;
     }
 
 
     public List<Categories> getAllCategories() {
-        return categoryRepository.findAll();
+        return repository.findAll();
     }
 
     public Categories findById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
     }
 
     public boolean deleteCategoryById(Long id) {
         Categories categories = findById(id);
-        categoryRepository.deleteById(id);
+        repository.deleteById(id);
         return true;
     }
 

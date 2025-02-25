@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 @Service
 public class ProductsService {
@@ -22,34 +24,34 @@ public class ProductsService {
     private CategoryService categoryService;
 
 
-    public Products registerProduct(String codeP, String name, double costValue, Long category, double purcValue, LocalDateTime h_now, String desc) {
-        Categories categories = this.categoryService.findById(category);
-        AuthorizationService auth = new AuthorizationService();
-        Products newProducts = new Products(codeP, name, costValue, categories, purcValue,h_now,null, desc);
+    public Products registerProduct(String productCode, String name, Long categoryId, String description) {
+//        AuthorizationService auth = new AuthorizationService();
+
+        Categories category = this.categoryService.findById(categoryId);
+        Products newProducts = new Products(productCode, name, category, description);
+
         this.productsRepository.save(newProducts);
         return ResponseEntity.status(HttpStatus.CREATED).body(newProducts).getBody();
     }
 
-    public Products updateProduct(Long id, String name, String desc, double costValue, double purchValue, Long category) {
-        Categories categories = this.categoryService.findById(category);
-        Products existingProduct = getProductById(id).orElse(null);
-        if (existingProduct == null) {
-            return null;
+    public Products update(Long id, String name, String desc, Long categoryId) {
+        Products product = getProductById(id).orElseThrow();
+
+        if(categoryId != null) {
+            Categories category = this.categoryService.findById(categoryId);
+            product.setCategory(category);
         }
-        LocalDateTime originalCreatedAt = existingProduct.getCreated_at();
-        existingProduct.setCreated_at(originalCreatedAt);
-        existingProduct.setName(name);
-        existingProduct.setDescription(desc);
-        existingProduct.setUpdated_at(LocalDateTime.now());
-        existingProduct.setPurchase_value(purchValue);
-        existingProduct.setCost_value(costValue);
-        existingProduct.setCategories(categories);
-        productsRepository.save(existingProduct);
-        return existingProduct;
+
+        product.setName(name);
+        product.setDescription(desc);
+        product.setUpdated_at(LocalDateTime.now());
+
+        productsRepository.save(product);
+        return product;
     }
 
-    public List<Products> getAllCategories() {
-        return productsRepository.findAll();
+    public Page<Products> getAllProducts(Pageable pageable) {
+        return productsRepository.findByDeletedAtIsNull(pageable);
     }
 
     public Optional<Products> getProductById(Long id) {
@@ -57,7 +59,8 @@ public class ProductsService {
     }
 
     public void deleteProductById(Long id) {
-        productsRepository.deleteById(id);
+        Products product = getProductById(id).orElseThrow();
+        product.setDeletedAt(LocalDateTime.now());
+        productsRepository.save(product);
     }
-
 }

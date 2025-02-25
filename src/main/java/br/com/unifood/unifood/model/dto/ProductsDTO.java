@@ -2,7 +2,12 @@ package br.com.unifood.unifood.model.dto;
 
 import java.time.LocalDateTime;
 
-public record ProductsDTO(String product_code, String name, double cost_value, double purchase_value, Long category_id, LocalDateTime created_at,
-                          LocalDateTime updated_at, String description) {
-
+public record ProductsDTO(
+        Long category_id,
+        String name,
+        String description,
+        String product_code,
+        LocalDateTime created_at,
+        LocalDateTime updated_at
+    ) {
 }

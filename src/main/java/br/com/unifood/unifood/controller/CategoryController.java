@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -25,53 +26,43 @@ public class CategoryController {
 
     GlobalError globalError = new GlobalError();
 
-    @PostMapping("/register")
+    @PostMapping("/")
     public ResponseEntity<Object> register(@RequestBody @Validated CategoryDTO data) {
-     try {
          Categories newCategories = categoryService.registerProduct(data.name(), data.description(), data.created_at());
+
          if (newCategories != null) {
              return ResponseEntity.status(HttpStatus.CREATED).body(newCategories);
          } else {
              return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Categoria já cadastrado");
          }
-     } catch (Exception e) {
-         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(globalError.createErrorResponse(
-                 e.getMessage(), "Erro ao Registrar Categoria!"));
-     }
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public List<Categories> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getUserById(@PathVariable Long id) {
-        try {
-            Categories listCategories = categoryService.findById(id);
-            return ResponseEntity.ok(listCategories);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(globalError.createErrorResponse(
-                    e.getMessage(), "Erro ao Listar Categorias"));
-        }
+    public ResponseEntity<Categories> getUserById(@PathVariable Long id) {
+        Categories listCategories = categoryService.findById(id);
+
+        return ResponseEntity.ok(listCategories);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateCategory(@PathVariable Long id, @RequestBody @Validated CategoryDTO data) {
-        try {
-            Categories updateCategory = categoryService.updateProduct(id, data.name(), data.description());
-            if (updateCategory != null) {
-                return ResponseEntity.status(HttpStatus.FOUND).body(updateCategory);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada!");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(globalError.createErrorResponse(
-                    e.getMessage(), "Erro ao Atualizar Categorias"));
+        Categories category = categoryService.updateCategory(id, data.name(), data.description());
+
+        if (category != null) {
+            return ResponseEntity.status(HttpStatus.FOUND).body(category);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Collections.singletonMap("message", "Categoria não encontrada!"));
         }
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteCategory(@PathVariable Long id) {
         try {
             boolean deleteCategory = categoryService.deleteCategoryById(id);
             if (deleteCategory) {
